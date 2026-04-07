@@ -3,9 +3,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from sklearn.linear_model import LinearRegression
 
-# =====================================================
-# 1️⃣ LOAD CO2 DATA
-# =====================================================
+# LOAD CO2 DATA
 
 co2 = pd.read_csv("data/co2.csv")
 
@@ -18,9 +16,7 @@ co2 = co2.rename(columns={
 co2 = co2[["country", "year", "co2_per_capita"]]
 
 
-# =====================================================
-# 2️⃣ LOAD GDP DATA
-# =====================================================
+# LOAD GDP DATA
 
 gdp = pd.read_csv("data/gdp.csv")
 
@@ -33,17 +29,13 @@ gdp = gdp.rename(columns={
 gdp = gdp[["country", "year", "gdp_per_capita"]]
 
 
-# =====================================================
-# 3️⃣ MERGE CO2 + GDP
-# =====================================================
+# MERGE CO2 + GDP
 
 df = pd.merge(co2, gdp, on=["country", "year"], how="inner")
 df = df.dropna()
 
 
-# =====================================================
-# 4️⃣ LOAD RENEWABLE ENERGY DATA
-# =====================================================
+# LOAD RENEWABLE ENERGY DATA
 
 renew = pd.read_csv("data/renewables.csv")
 
@@ -60,16 +52,12 @@ df = pd.merge(df, renew, on=["country", "year"], how="inner")
 df = df.dropna()
 
 
-# =====================================================
-# 5️⃣ CREATE EMISSIONS INTENSITY
-# =====================================================
+# CREATE EMISSIONS INTENSITY
 
 df["emissions_intensity"] = df["co2_per_capita"] / df["gdp_per_capita"]
 
 
-# =====================================================
-# 6️⃣ COMPARE COUNTRIES (INTENSITY OVER TIME)
-# =====================================================
+# COMPARE COUNTRIES (INTENSITY OVER TIME)
 
 countries = [
     "United Kingdom",
@@ -94,9 +82,7 @@ plt.grid(True)
 plt.show()
 
 
-# =====================================================
-# 7️⃣ FORECAST INTENSITY TO 2035
-# =====================================================
+# FORECAST INTENSITY TO 2035
 
 country = "India"  # change this to test others
 
@@ -123,9 +109,7 @@ plt.grid(True)
 plt.show()
 
 
-# =====================================================
-# 8️⃣ GDP vs CO2 CORRELATION
-# =====================================================
+# GDP vs CO2 CORRELATION
 
 gdp_co2_corr = df_country["gdp_per_capita"].corr(
     df_country["co2_per_capita"]
@@ -134,9 +118,7 @@ gdp_co2_corr = df_country["gdp_per_capita"].corr(
 print(f"\nGDP vs CO₂ Correlation ({country}): {gdp_co2_corr:.3f}")
 
 
-# =====================================================
-# 9️⃣ RENEWABLES vs INTENSITY ANALYSIS
-# =====================================================
+# RENEWABLES vs INTENSITY ANALYSIS
 
 plt.figure(figsize=(10, 6))
 plt.scatter(df_country["renewable_share"],
